@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+# activte anaconda environment
+source activate base
+
+
+# Check if at least one argument is provided
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <command>"
+    exit 1
+fi
+
+# Combine all arguments into a single command string
+command="$@"
+
+# Get the current date and time
+timestamp=$(date +"%Y%m%d_%H%M%S")
+
+# Define the output file name
+output_file="output_${timestamp}.txt"
+
+# Execute the command and redirect the output
+(cat "$2"; echo ""; echo "----- End of Script Code -----"; echo ""; (time $command) 2>&1; echo ""; echo "----- End of Timing Output -----") > "$output_file"
+
+# Notify the user
+echo "Output written to $output_file"
+
